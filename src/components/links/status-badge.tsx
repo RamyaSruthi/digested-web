@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { LinkStatus, ContentType } from "@/types";
+import type { LinkStatus } from "@/types";
 
 export function getStatusLabel(status: LinkStatus): string {
   if (status === "unread")   return "Yet to Digest";
@@ -9,11 +9,11 @@ export function getStatusLabel(status: LinkStatus): string {
 
 interface StatusBadgeProps {
   status: LinkStatus;
-  contentType?: ContentType | null;
+  contentType?: unknown;
   className?: string;
 }
 
-export function StatusBadge({ status, contentType, className }: StatusBadgeProps) {
+export function StatusBadge({ status, className }: StatusBadgeProps) {
   const style =
     status === "digested" ? { background: "rgba(14,168,122,0.15)", color: "#0EA87A", backdropFilter: "blur(8px)" }
     : status === "archived" ? { background: "rgba(100,116,139,0.15)", color: "#64748B", backdropFilter: "blur(8px)" }
