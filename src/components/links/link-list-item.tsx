@@ -122,7 +122,7 @@ export function LinkListItem({ link }: LinkListItemProps) {
 
       {/* Dead link warning */}
       {link.is_dead && (
-        <AlertTriangle className="w-3.5 h-3.5 text-destructive flex-shrink-0" title="Link may be broken" />
+        <span title="Link may be broken"><AlertTriangle className="w-3.5 h-3.5 text-destructive flex-shrink-0" /></span>
       )}
 
       {/* Date */}
