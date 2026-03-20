@@ -2,26 +2,135 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: 248 250 252;
+    --foreground: 15 23 42;
+    --card: 255 255 255;
+    --card-foreground: 15 23 42;
+    --popover: 255 255 255;
+    --popover-foreground: 15 23 42;
+    --primary: 127 119 221;
+    --primary-foreground: 255 255 255;
+    --secondary: 241 245 249;
+    --secondary-foreground: 15 23 42;
+    --muted: 241 245 249;
+    --muted-foreground: 100 116 139;
+    --accent: 241 245 249;
+    --accent-foreground: 15 23 42;
+    --destructive: 239 68 68;
+    --destructive-foreground: 255 255 255;
+    --border: 226 232 240;
+    --input: 226 232 240;
+    --ring: 127 119 221;
+    --radius: 0.625rem;
+
+    /* Semantic text + surface tokens */
+    --text-primary:   15 23 42;
+    --text-secondary: 71 85 105;
+    --text-muted:     148 163 184;
+    --surface:        255 255 255;
   }
+
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-[#F4F4F8] text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar        { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-track  { background: transparent; }
+  ::-webkit-scrollbar-thumb  { @apply bg-border rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-muted-foreground/30; }
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
   }
+
+  .gradient-brand {
+    background: linear-gradient(135deg, #7F77DD 0%, #5B52C8 100%);
+  }
+
+  .gradient-brand-soft {
+    background: linear-gradient(135deg, #EEEDFE 0%, #E8E6FD 100%);
+  }
+
+  .shadow-card {
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+  }
+
+  .shadow-card-hover {
+    box-shadow: 0 8px 25px rgba(127,119,221,0.15), 0 4px 10px rgba(0,0,0,0.06);
+  }
+
+  .shadow-panel {
+    box-shadow: -4px 0 24px rgba(0,0,0,0.06);
+  }
+}
+
+@layer base {
+  ::selection {
+    background: rgba(127, 119, 221, 0.25);
+    color: inherit;
+  }
+}
+
+/* ── Article Highlights ──────────────────────────────── */
+mark.hl-yellow { background: #FEF08A; color: inherit; border-radius: 2px; padding: 0 1px; cursor: pointer; }
+mark.hl-green  { background: #BBF7D0; color: inherit; border-radius: 2px; padding: 0 1px; cursor: pointer; }
+mark.hl-blue   { background: #BAE6FD; color: inherit; border-radius: 2px; padding: 0 1px; cursor: pointer; }
+mark.hl-pink   { background: #FBCFE8; color: inherit; border-radius: 2px; padding: 0 1px; cursor: pointer; }
+mark.hl-yellow:hover, mark.hl-green:hover, mark.hl-blue:hover, mark.hl-pink:hover { filter: brightness(0.92); }
+
+/* Keep mark colors visible when text inside them is selected */
+mark.hl-yellow::selection, mark.hl-yellow *::selection { background: #e9c84a; }
+mark.hl-green::selection,  mark.hl-green  *::selection { background: #6dca96; }
+mark.hl-blue::selection,   mark.hl-blue   *::selection { background: #6ec8f0; }
+mark.hl-pink::selection,   mark.hl-pink   *::selection { background: #f093c4; }
+
+/* ── Tiptap Notes Editor ─────────────────────────────── */
+.tiptap-notes .ProseMirror { outline: none; min-height: 100%; }
+.tiptap-notes .ProseMirror > * + * { margin-top: 0.6rem; }
+.tiptap-notes .ProseMirror p { font-size: 15px; line-height: 1.75; color: #475569; }
+.tiptap-notes .ProseMirror h1 { font-size: 1.2rem; font-weight: 700; color: #0F172A; margin-top: 1.2rem; }
+.tiptap-notes .ProseMirror h2 { font-size: 1.05rem; font-weight: 600; color: #0F172A; margin-top: 1rem; }
+.tiptap-notes .ProseMirror h3 { font-size: 0.95rem; font-weight: 600; color: #334155; margin-top: 0.8rem; }
+.tiptap-notes .ProseMirror ul { list-style: disc; padding-left: 1.25rem; }
+.tiptap-notes .ProseMirror ol { list-style: decimal; padding-left: 1.25rem; }
+.tiptap-notes .ProseMirror li { font-size: 15px; line-height: 1.7; color: #475569; }
+.tiptap-notes .ProseMirror li + li { margin-top: 0.2rem; }
+.tiptap-notes .ProseMirror blockquote {
+  border-left: 3px solid #c4c1f5;
+  padding-left: 0.85rem;
+  color: #64748b;
+  font-style: italic;
+}
+.tiptap-notes .ProseMirror code {
+  background: #EEEDFE; color: #7F77DD;
+  padding: 0.15em 0.4em; border-radius: 4px; font-size: 0.85em;
+}
+.tiptap-notes .ProseMirror pre {
+  background: #1e293b; color: #e2e8f0;
+  padding: 0.9rem 1rem; border-radius: 10px; overflow-x: auto; font-size: 0.85em;
+}
+.tiptap-notes .ProseMirror pre code { background: none; color: inherit; padding: 0; }
+.tiptap-notes .ProseMirror hr { border: none; border-top: 1px solid #e2e8f0; margin: 1rem 0; }
+.tiptap-notes .ProseMirror p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder); color: #cbd5e1;
+  pointer-events: none; float: left; height: 0;
 }
