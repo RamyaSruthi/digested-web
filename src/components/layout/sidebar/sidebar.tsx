@@ -8,7 +8,7 @@ import { SearchModal } from "@/components/layout/search-modal";
 
 export function Sidebar() {
   return (
-    <aside className="w-[220px] flex-shrink-0 bg-white dark:bg-dark-surface border-r border-border flex flex-col h-full">
+    <aside className="hidden lg:flex w-[220px] flex-shrink-0 bg-white dark:bg-dark-surface border-r border-border flex-col h-full">
       {/* Brand header */}
       <div className="gradient-brand px-5 pt-5 pb-4">
         <div className="flex items-center gap-2.5">

@@ -313,10 +313,10 @@ export function DetailPanel() {
     <AnimatePresence>
       {isDetailPanelOpen && (
         <motion.aside
-          className="w-[360px] flex-shrink-0 bg-card flex flex-col h-full overflow-hidden shadow-panel"
-          initial={{ x: 360, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          exit={{ x: 360, opacity: 0 }}
+          className="fixed inset-0 z-40 bg-card flex flex-col overflow-hidden lg:relative lg:inset-auto lg:w-[360px] lg:flex-shrink-0 lg:h-full lg:z-auto shadow-panel"
+          initial={{ x: "100%" }}
+          animate={{ x: 0 }}
+          exit={{ x: "100%" }}
           transition={{ type: "spring", stiffness: 320, damping: 32 }}
         >
           {selectedLink ? (
