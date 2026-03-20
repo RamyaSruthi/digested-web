@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Suspense } from "react";
+import { Suspense } from "react";
 import { LinkGrid } from "@/components/links/link-grid";
 import { Archive } from "lucide-react";
 

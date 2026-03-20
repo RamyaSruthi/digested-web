@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { useState } from "react";
-import { ExternalLink, MoreHorizontal, Trash2, CheckCircle, Clock, PlayCircle, Twitter, FileText, AlertTriangle, Archive } from "lucide-react";
+import { ExternalLink, MoreHorizontal, Trash2, CheckCircle, Clock, PlayCircle, Twitter, FileText, AlertTriangle } from "lucide-react";
 import { StatusBadge, getStatusLabel } from "./status-badge";
 import { DigestedDialog } from "./digested-dialog";
 import { useUIStore } from "@/store/ui-store";
@@ -103,7 +103,7 @@ export function LinkCard({ link, index = 0 }: LinkCardProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.35, delay: index * 0.05, ease: [0.25, 0.1, 0.25, 1] }}
       whileHover={!isSelecting ? { y: -3, transition: { duration: 0.2 } } : {}}
-      onClick={(e) => {
+      onClick={() => {
         if (isSelecting) { toggleLinkSelection(link.id); return; }
         openDetailPanel(link.id);
       }}
@@ -314,13 +314,13 @@ export function LinkCard({ link, index = 0 }: LinkCardProps) {
                 {link.status !== "digested" && (
                   <DropdownMenuItem onClick={() => setDigestedDialogOpen(true)}>
                     <CheckCircle className="w-4 h-4 mr-2" />
-                    Mark as {getStatusLabel("digested", link.content_type)}
+                    Mark as {getStatusLabel("digested")}
                   </DropdownMenuItem>
                 )}
                 {link.status !== "unread" && (
                   <DropdownMenuItem onClick={() => handleStatusChange("unread")}>
                     <Clock className="w-4 h-4 mr-2" />
-                    Mark as {getStatusLabel("unread", link.content_type)}
+                    Mark as {getStatusLabel("unread")}
                   </DropdownMenuItem>
                 )}
                 <DropdownMenuSeparator />

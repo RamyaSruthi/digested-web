@@ -179,7 +179,7 @@ function PanelContent({ link }: PanelContentProps) {
                   }`}
                 >
                   <Icon className="w-3.5 h-3.5 flex-shrink-0" />
-                  {getStatusLabel(status, link.content_type)}
+                  {getStatusLabel(status)}
                 </button>
               ))}
             </div>

@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import type { LinkStatus, ContentType } from "@/types";
 
-export function getStatusLabel(status: LinkStatus, _contentType?: ContentType | null): string {
+export function getStatusLabel(status: LinkStatus): string {
   if (status === "unread")   return "Yet to Digest";
   if (status === "archived") return "Archived";
   return "Digested";
@@ -23,7 +23,7 @@ export function StatusBadge({ status, contentType, className }: StatusBadgeProps
       className={cn("inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-semibold tracking-wide", className)}
       style={style}
     >
-      {getStatusLabel(status, contentType)}
+      {getStatusLabel(status)}
     </span>
   );
 }

@@ -20,7 +20,7 @@ interface FolderItemProps {
   index: number;
 }
 
-export function FolderItem({ folder, index }: FolderItemProps) {
+export function FolderItem({ folder }: FolderItemProps) {
   const pathname = usePathname();
   const isActive = pathname === `/folder/${folder.id}`;
   const [isRenaming, setIsRenaming] = useState(false);

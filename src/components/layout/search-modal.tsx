@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { useRouter } from "next/navigation";
-import { Search, ExternalLink, Clock, CheckCircle, X } from "lucide-react";
+import { Search, Clock, CheckCircle, X } from "lucide-react";
 import { useLinks } from "@/hooks/use-links";
 import { useUIStore } from "@/store/ui-store";
 import { cn } from "@/lib/utils";
@@ -61,7 +60,6 @@ export function SearchModal() {
   const [activeIndex, setActiveIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
   const { openDetailPanel } = useUIStore();
-  const router = useRouter();
 
   const { data: results = [], isFetching } = useLinks(
     query.trim().length >= 2 ? { search: query.trim() } : undefined

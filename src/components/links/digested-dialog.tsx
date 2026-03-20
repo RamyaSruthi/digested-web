@@ -25,7 +25,7 @@ export function DigestedDialog({ open, onOpenChange, onKeep, onArchive }: Digest
           <div className="flex items-center justify-center w-12 h-12 rounded-full bg-brand-teal-light mx-auto mb-2">
             <CheckCircle className="w-6 h-6 text-brand-teal" />
           </div>
-          <DialogTitle className="text-center">Great, you've digested this!</DialogTitle>
+          <DialogTitle className="text-center">Great, you&apos;ve digested this!</DialogTitle>
           <DialogDescription className="text-center">
             Would you like to see this link again in the future?
           </DialogDescription>

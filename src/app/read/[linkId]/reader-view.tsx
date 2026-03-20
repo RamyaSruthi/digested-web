@@ -481,8 +481,8 @@ export function ReaderView({ link, content, initialHighlights }: ReaderViewProps
           >
             <CheckCircle className="w-3.5 h-3.5" />
             {status === "digested"
-              ? getStatusLabel("digested", link.content_type)
-              : `Mark ${getStatusLabel("digested", link.content_type)}`}
+              ? getStatusLabel("digested")
+              : `Mark ${getStatusLabel("digested")}`}
           </button>
           <button
             onClick={() => setNotesOpen((o) => !o)}
