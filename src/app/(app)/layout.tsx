@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { Sidebar } from "@/components/layout/sidebar/sidebar";
 import { DetailPanel } from "@/components/layout/detail-panel";
 import { BulkActionBar } from "@/components/links/bulk-action-bar";
