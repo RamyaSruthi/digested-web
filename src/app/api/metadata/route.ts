@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 function decodeHtmlEntities(str: string): string {
   return str
@@ -113,6 +113,30 @@ async function fetchYouTubeMetadata(url: string) {
     }
 
     return null;
+  } catch {
+    return null;
+  }
+}
+
+// Instagram — oEmbed with app token
+async function fetchInstagramMetadataWithAppToken(url: string) {
+  const appId = process.env.INSTAGRAM_CLIENT_ID;
+  const appSecret = process.env.INSTAGRAM_CLIENT_SECRET;
+  if (!appId || !appSecret) return null;
+
+  try {
+    const appToken = `${appId}|${appSecret}`;
+    const res = await fetch(
+      `https://graph.facebook.com/v19.0/instagram_oembed?url=${encodeURIComponent(url)}&access_token=${appToken}`,
+      { signal: AbortSignal.timeout(4000) }
+    );
+    if (!res.ok) return null;
+    const data = await res.json();
+    return {
+      title: (data.title as string) ?? null,
+      description: data.author_name ? `By ${data.author_name as string}` : null,
+      image_url: (data.thumbnail_url as string) ?? null,
+    };
   } catch {
     return null;
   }
@@ -261,7 +285,7 @@ async function fetchRedditMetadata(url: string) {
   }
 }
 
-export async function GET(request: Request) {
+export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
   const url = searchParams.get("url");
 
@@ -286,14 +310,15 @@ export async function GET(request: Request) {
     // fall through to generic scrape
   }
 
-  // Instagram: mobile user-agent + JSON-LD
+  // Instagram: oEmbed with app token, no scraping fallback (Instagram blocks scrapers)
   if (
     parsed.hostname === "www.instagram.com" ||
     parsed.hostname === "instagram.com"
   ) {
-    const igMeta = await fetchInstagramMetadata(url);
-    if (igMeta) return NextResponse.json(igMeta);
-    return NextResponse.json({ title: "Instagram", description: null, image_url: null });
+    const igMeta = await fetchInstagramMetadataWithAppToken(url);
+    return NextResponse.json(
+      igMeta ?? { title: "Instagram", description: null, image_url: null }
+    );
   }
 
   // Twitter / X: oEmbed
