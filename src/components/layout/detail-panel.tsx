@@ -59,19 +59,17 @@ function PanelContent({ link }: PanelContentProps) {
     }
   }
 
-  async function handleStatusChange(status: LinkStatus) {
-    try {
-      await updateLink.mutateAsync({
+  function handleStatusChange(status: LinkStatus) {
+    // Close the panel immediately — don't wait for the network round-trip
+    if (status === "archived" || status === "digested") closeDetailPanel();
+    updateLink.mutate(
+      {
         id: link.id,
         status,
-        // Only set digested_at when marking as digested — don't clear it
-        // when archiving so the historical count is preserved in stats
         ...(status === "digested" ? { digested_at: new Date().toISOString() } : {}),
-      });
-      if (status === "archived" || status === "digested") closeDetailPanel();
-    } catch {
-      toast.error("Failed to update status");
-    }
+      },
+      { onError: () => toast.error("Failed to update status") }
+    );
   }
 
   async function handleDelete() {

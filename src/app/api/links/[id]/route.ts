@@ -35,8 +35,8 @@ export async function PATCH(request: Request, { params }: RouteContext) {
   if (result.data.status === "digested" && !result.data.digested_at) {
     updateData.digested_at = new Date().toISOString();
   }
-  // Clear digested_at when un-digesting
-  if (result.data.status && result.data.status !== "digested") {
+  // Clear digested_at only when explicitly marking back to unread
+  if (result.data.status === "unread") {
     updateData.digested_at = null;
   }
 
