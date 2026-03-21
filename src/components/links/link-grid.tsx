@@ -94,7 +94,7 @@ export function LinkGrid({
         ))}
       </div>
     ) : (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         {[1, 2, 3, 4, 5, 6].map((i) => <SkeletonCard key={i} />)}
       </div>
     );
@@ -126,7 +126,7 @@ export function LinkGrid({
       variants={containerVariants}
       initial="hidden"
       animate="show"
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
     >
       {filtered.map((link, i) => (
         <LinkCard key={link.id} link={link} index={i} />

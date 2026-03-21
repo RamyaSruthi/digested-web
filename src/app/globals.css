@@ -46,7 +46,9 @@
   }
 
   body {
-    @apply bg-[#F4F4F8] text-foreground;
+    @apply text-foreground;
+    background: linear-gradient(145deg, #F0F0F8 0%, #EEEEF6 40%, #F2EEF8 100%);
+    min-height: 100vh;
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
     overscroll-behavior-y: none;
