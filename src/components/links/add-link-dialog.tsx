@@ -44,6 +44,7 @@ type FormValues = z.infer<typeof schema>;
 interface AddLinkDialogProps {
   children: React.ReactNode;
   defaultFolderId?: string;
+  defaultUrl?: string;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
 }
@@ -205,7 +206,7 @@ function FolderSelector({
   );
 }
 
-export function AddLinkDialog({ children, defaultFolderId, open: controlledOpen, onOpenChange }: AddLinkDialogProps) {
+export function AddLinkDialog({ children, defaultFolderId, defaultUrl, open: controlledOpen, onOpenChange }: AddLinkDialogProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const open = controlledOpen ?? internalOpen;
   const setOpen = onOpenChange ?? setInternalOpen;
@@ -215,7 +216,7 @@ export function AddLinkDialog({ children, defaultFolderId, open: controlledOpen,
 
   const form = useForm<FormValues>({
     resolver: zodResolver(schema),
-    defaultValues: { url: "", folder_id: defaultFolderId ?? "" },
+    defaultValues: { url: defaultUrl ?? "", folder_id: defaultFolderId ?? "" },
   });
 
   const urlValue = form.watch("url");

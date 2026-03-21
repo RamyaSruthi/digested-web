@@ -5,6 +5,7 @@ import { DetailPanel } from "@/components/layout/detail-panel";
 import { BulkActionBar } from "@/components/links/bulk-action-bar";
 import { KeyboardShortcutsModal } from "@/components/layout/keyboard-shortcuts-modal";
 import { MobileBottomNav } from "@/components/layout/mobile-bottom-nav";
+import { InstallPrompt } from "@/components/layout/install-prompt";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -15,6 +16,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
       <BulkActionBar />
       <KeyboardShortcutsModal />
       <MobileBottomNav />
+      <InstallPrompt />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, Suspense, useRef } from "react";
+import { useState, Suspense, useRef, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { LinkGrid } from "./link-grid";
 import { StatusTabs } from "./status-tabs";
@@ -23,7 +23,14 @@ function FeedContent() {
 
   const statusParam = searchParams.get("status") as LinkStatus | null;
   const tagParam = searchParams.get("tag");
+  const shareUrl = searchParams.get("shareUrl");
+  const shareTitle = searchParams.get("shareTitle");
   const { viewMode, setViewMode } = useUIStore();
+
+  // Auto-open AddLinkDialog when arriving from Web Share Target
+  useEffect(() => {
+    if (shareUrl) setAddLinkOpen(true);
+  }, [shareUrl]);
 
   useKeyboardShortcuts({
     onAddLink: () => setAddLinkOpen(true),
@@ -99,7 +106,7 @@ function FeedContent() {
             </div>
             {/* Add Link — desktop only (mobile uses bottom nav FAB) */}
             <div className="hidden lg:block">
-              <AddLinkDialog open={addLinkOpen} onOpenChange={setAddLinkOpen}>
+              <AddLinkDialog open={addLinkOpen} onOpenChange={setAddLinkOpen} defaultUrl={shareUrl ?? undefined}>
                 <Button className="bg-brand-purple hover:bg-brand-purple-dark gap-2 h-9">
                   <Plus className="w-4 h-4" />
                   Add Link <kbd className="ml-1 text-xs opacity-60 font-mono">N</kbd>
