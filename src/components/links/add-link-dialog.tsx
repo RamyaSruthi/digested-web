@@ -221,6 +221,19 @@ export function AddLinkDialog({ children, defaultFolderId, defaultUrl, open: con
 
   const urlValue = form.watch("url");
 
+  // When dialog opens with no pre-filled URL, try to read a URL from clipboard
+  useEffect(() => {
+    if (!open || defaultUrl) return;
+    navigator.clipboard?.readText().then((text) => {
+      const trimmed = text?.trim();
+      if (!trimmed) return;
+      try {
+        new URL(trimmed);
+        form.setValue("url", trimmed);
+      } catch { /* not a URL */ }
+    }).catch(() => { /* permission denied */ });
+  }, [open]); // eslint-disable-line react-hooks/exhaustive-deps
+
   useEffect(() => {
     const timer = setTimeout(() => {
       try {
