@@ -142,6 +142,51 @@ async function fetchInstagramMetadataWithAppToken(url: string) {
   }
 }
 
+// Instagram — scrape with mobile user-agent + JSON-LD (fallback, works for some posts)
+async function scrapeInstagramMetadata(url: string) {
+  try {
+    const res = await fetch(url, {
+      headers: {
+        "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+      },
+      signal: AbortSignal.timeout(6000),
+    });
+    if (!res.ok) return null;
+    const html = await res.text();
+
+    const ogImage = extractMeta(html, "og:image");
+    const ogTitle = extractMeta(html, "og:title");
+    const ogDesc = extractMeta(html, "og:description");
+    if (ogImage) {
+      return {
+        title: ogTitle ? decodeHtmlEntities(ogTitle) : null,
+        description: ogDesc ? decodeHtmlEntities(ogDesc) : null,
+        image_url: ogImage,
+      };
+    }
+
+    const jsonLdMatch = html.match(/<script[^>]+type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/i);
+    if (jsonLdMatch) {
+      try {
+        const ld = JSON.parse(jsonLdMatch[1]);
+        const thumbnail = ld?.thumbnailUrl ?? ld?.image?.url ?? ld?.image ?? null;
+        if (thumbnail && typeof thumbnail === "string") {
+          return {
+            title: ld?.name ?? ld?.headline ?? null,
+            description: ld?.description ?? null,
+            image_url: thumbnail,
+          };
+        }
+      } catch { /* malformed JSON-LD */ }
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
 // Twitter/X oEmbed — returns basic info (no direct image, but we get the tweet text)
 async function fetchTwitterMetadata(url: string) {
   try {
@@ -249,12 +294,14 @@ export async function GET(request: NextRequest) {
     // fall through to generic scrape
   }
 
-  // Instagram: oEmbed with app token, no scraping fallback (Instagram blocks scrapers)
+  // Instagram: oEmbed with app token (requires App Review), fallback to scraping
   if (
     parsed.hostname === "www.instagram.com" ||
     parsed.hostname === "instagram.com"
   ) {
-    const igMeta = await fetchInstagramMetadataWithAppToken(url);
+    const igMeta =
+      (await fetchInstagramMetadataWithAppToken(url)) ??
+      (await scrapeInstagramMetadata(url));
     return NextResponse.json(
       igMeta ?? { title: "Instagram", description: null, image_url: null }
     );
