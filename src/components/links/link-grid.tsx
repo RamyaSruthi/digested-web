@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { LinkCard } from "./link-card";
 import { LinkListItem } from "./link-list-item";
@@ -73,9 +74,20 @@ export function LinkGrid({
 }: LinkGridProps) {
   const { data: links, isLoading } = useLinks(filters);
   const { viewMode } = useUIStore();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 1023px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
+
+  const effectiveViewMode = isMobile ? "list" : viewMode;
 
   if (isLoading) {
-    return viewMode === "list" ? (
+    return effectiveViewMode === "list" ? (
       <div className="space-y-2">
         {[1, 2, 3, 4, 5, 6].map((i) => (
           <div key={i} className="h-14 rounded-xl bg-card border border-border animate-pulse" />
@@ -99,7 +111,7 @@ export function LinkGrid({
     return <EmptyState message={emptyMessage} hasSearch={!!search.trim()} search={search} />;
   }
 
-  if (viewMode === "list") {
+  if (effectiveViewMode === "list") {
     return (
       <div className="space-y-2">
         {filtered.map((link) => (
