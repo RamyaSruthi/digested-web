@@ -327,24 +327,42 @@ export function DetailPanel() {
   const selectedLink = links?.find((l) => l.id === selectedLinkId) ?? null;
 
   return (
-    <AnimatePresence>
-      {isDetailPanelOpen && (
-        <motion.aside
-          className="fixed inset-0 z-40 bg-card flex flex-col overflow-hidden lg:relative lg:inset-auto lg:w-[360px] lg:flex-shrink-0 lg:h-full lg:z-auto shadow-panel"
-          initial={{ x: "100%" }}
-          animate={{ x: 0 }}
-          exit={{ x: "100%" }}
-          transition={{ type: "spring", stiffness: 320, damping: 32 }}
-        >
-          {selectedLink ? (
-            <PanelContent link={selectedLink} />
-          ) : (
-            <div className="flex items-center justify-between p-4 border-b border-border">
-              <h2 className="text-sm font-semibold text-text-primary">Link Details</h2>
+    <>
+      {/* Mobile: slide-in overlay (unchanged behaviour) */}
+      <AnimatePresence>
+        {isDetailPanelOpen && (
+          <motion.aside
+            className="fixed inset-0 z-40 bg-card flex flex-col overflow-hidden lg:hidden shadow-panel"
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "spring", stiffness: 320, damping: 32 }}
+          >
+            {selectedLink ? (
+              <PanelContent link={selectedLink} />
+            ) : (
+              <div className="flex items-center justify-between p-4 border-b border-border">
+                <h2 className="text-sm font-semibold text-text-primary">Link Details</h2>
+              </div>
+            )}
+          </motion.aside>
+        )}
+      </AnimatePresence>
+
+      {/* Desktop: always-visible right panel */}
+      <aside className="hidden lg:flex lg:flex-col w-[360px] flex-shrink-0 h-full bg-card border-l border-border overflow-hidden">
+        {selectedLink ? (
+          <PanelContent link={selectedLink} />
+        ) : (
+          <div className="flex flex-col items-center justify-center h-full text-center px-8">
+            <div className="w-12 h-12 rounded-2xl bg-muted flex items-center justify-center mb-3">
+              <BookOpen className="w-5 h-5 text-text-muted" />
             </div>
-          )}
-        </motion.aside>
-      )}
-    </AnimatePresence>
+            <p className="text-sm font-medium text-text-primary mb-1">Nothing selected</p>
+            <p className="text-xs text-text-muted">Click any link to see its details here</p>
+          </div>
+        )}
+      </aside>
+    </>
   );
 }
