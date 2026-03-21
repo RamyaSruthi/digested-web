@@ -64,7 +64,9 @@ function PanelContent({ link }: PanelContentProps) {
       await updateLink.mutateAsync({
         id: link.id,
         status,
-        digested_at: status === "digested" ? new Date().toISOString() : null,
+        // Only set digested_at when marking as digested — don't clear it
+        // when archiving so the historical count is preserved in stats
+        ...(status === "digested" ? { digested_at: new Date().toISOString() } : {}),
       });
       if (status === "archived" || status === "digested") closeDetailPanel();
     } catch {

@@ -22,7 +22,7 @@ export async function GET() {
 
   const allLinks = links ?? [];
   const total_saved = allLinks.length;
-  const total_digested = allLinks.filter((l) => l.status === "digested").length;
+  const total_digested = allLinks.filter((l) => l.digested_at !== null).length;
   const total_unread = allLinks.filter((l) => l.status === "unread").length;
   const total_highlights = (highlights ?? []).length;
 
