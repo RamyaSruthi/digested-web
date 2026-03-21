@@ -24,7 +24,6 @@ function FeedContent() {
   const statusParam = searchParams.get("status") as LinkStatus | null;
   const tagParam = searchParams.get("tag");
   const shareUrl = searchParams.get("shareUrl");
-  const shareTitle = searchParams.get("shareTitle");
   const { viewMode, setViewMode } = useUIStore();
 
   // Auto-open AddLinkDialog when arriving from Web Share Target
