@@ -94,6 +94,7 @@ export function useCreateLink() {
     mutationFn: createLinkApi,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["links"] });
+      queryClient.invalidateQueries({ queryKey: ["stats"] });
     },
   });
 }
@@ -128,6 +129,7 @@ export function useUpdateLink() {
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["links"] });
       queryClient.invalidateQueries({ queryKey: ["folders"] });
+      queryClient.invalidateQueries({ queryKey: ["stats"] });
     },
   });
 }
@@ -147,6 +149,7 @@ export function useDeleteLink() {
           );
         }
       });
+      queryClient.invalidateQueries({ queryKey: ["stats"] });
     },
   });
 }
