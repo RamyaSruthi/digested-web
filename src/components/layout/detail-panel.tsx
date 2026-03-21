@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import { useFolders } from "@/hooks/use-folders";
 import { TagEditor } from "@/components/links/tag-editor";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import type { Link, LinkStatus } from "@/types";
 
 function getDomain(url: string) {
@@ -31,7 +31,16 @@ function PanelContent({ link }: PanelContentProps) {
   const { data: folders } = useFolders();
   const [folderPopoverOpen, setFolderPopoverOpen] = useState(false);
   const [digestedDialogOpen, setDigestedDialogOpen] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
+
+  function handleScroll() {
+    const el = scrollRef.current;
+    if (!el) return;
+    const max = el.scrollHeight - el.clientHeight;
+    setScrollProgress(max > 0 ? (el.scrollTop / max) * 100 : 0);
+  }
 
   const folder = folders?.find((f) => f.id === link.folder_id);
   const isVideo = link.content_type === "video";
@@ -74,6 +83,14 @@ function PanelContent({ link }: PanelContentProps) {
 
   return (
     <>
+      {/* YouTube-style scroll progress bar */}
+      <div className="h-[3px] w-full bg-transparent flex-shrink-0">
+        <div
+          className="h-full bg-red-500 transition-all duration-75"
+          style={{ width: `${scrollProgress}%` }}
+        />
+      </div>
+
       <div className="flex items-center justify-between p-4 border-b border-border">
         <h2 className="text-sm font-semibold text-text-primary">
           {isVideo ? "Video Details" : "Link Details"}
@@ -89,7 +106,7 @@ function PanelContent({ link }: PanelContentProps) {
         </Button>
       </div>
 
-      <div className="flex-1 overflow-auto">
+      <div ref={scrollRef} onScroll={handleScroll} className="flex-1 overflow-auto">
         {/* OG Image */}
         {link.image_url && (
           <div className="w-full h-44 overflow-hidden bg-muted relative">
