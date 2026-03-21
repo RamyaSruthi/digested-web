@@ -101,9 +101,9 @@ export function LinkListItem({ link }: LinkListItemProps) {
   }
 
   return (
-    <div className="relative overflow-hidden rounded-xl">
+    <div className="relative overflow-hidden">
       {/* Swipe action buttons behind the item */}
-      <div className="absolute inset-0 flex items-stretch justify-end rounded-xl">
+      <div className="absolute inset-0 flex items-stretch justify-end">
         <motion.button
           style={{ opacity: archiveOpacity }}
           className="w-16 bg-amber-500 flex flex-col items-center justify-center gap-1 flex-shrink-0"
@@ -114,7 +114,7 @@ export function LinkListItem({ link }: LinkListItemProps) {
         </motion.button>
         <motion.button
           style={{ opacity: deleteOpacity }}
-          className="w-16 bg-red-500 flex flex-col items-center justify-center gap-1 rounded-r-xl flex-shrink-0"
+          className="w-16 bg-red-500 flex flex-col items-center justify-center gap-1 flex-shrink-0"
           onClick={(e) => handleDelete(e)}
         >
           <Trash2 className="w-4 h-4 text-white" />
@@ -131,10 +131,10 @@ export function LinkListItem({ link }: LinkListItemProps) {
         style={{ x }}
         onClick={handleClick}
         className={cn(
-          "group relative flex items-center gap-3 px-4 py-3 bg-card rounded-xl border cursor-pointer transition-colors",
-          isBulkSelected ? "border-brand-purple/40 bg-brand-purple-light/20"
-          : isSelected   ? "border-brand-purple/30"
-          : "border-border"
+          "group relative flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors",
+          isBulkSelected ? "bg-brand-purple-light/20"
+          : isSelected   ? "bg-brand-purple-light/10"
+          : "bg-card hover:bg-muted/40"
         )}
       >
         {/* Checkbox (bulk select) */}

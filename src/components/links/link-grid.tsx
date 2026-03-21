@@ -88,9 +88,9 @@ export function LinkGrid({
 
   if (isLoading) {
     return effectiveViewMode === "list" ? (
-      <div className="space-y-2">
+      <div className="bg-card rounded-xl border border-border overflow-hidden divide-y divide-border">
         {[1, 2, 3, 4, 5, 6].map((i) => (
-          <div key={i} className="h-14 rounded-xl bg-card border border-border animate-pulse" />
+          <div key={i} className="h-14 animate-pulse bg-muted/40" />
         ))}
       </div>
     ) : (
@@ -113,7 +113,7 @@ export function LinkGrid({
 
   if (effectiveViewMode === "list") {
     return (
-      <div className="space-y-2">
+      <div className="bg-card rounded-xl border border-border overflow-hidden divide-y divide-border">
         {filtered.map((link) => (
           <LinkListItem key={link.id} link={link} />
         ))}
