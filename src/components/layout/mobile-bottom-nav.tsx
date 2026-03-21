@@ -3,13 +3,13 @@
 import { Suspense, useState } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Inbox, CheckCircle, NotebookPen, Settings, Plus } from "lucide-react";
+import { Inbox, FolderOpen, NotebookPen, Settings, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AddLinkDialog } from "@/components/links/add-link-dialog";
 
 const leftItems = [
-  { href: "/app?status=unread",   label: "Feed",     icon: Inbox },
-  { href: "/app?status=digested", label: "Digested", icon: CheckCircle },
+  { href: "/app?status=unread", label: "Feed",    icon: Inbox },
+  { href: "/app/folders",       label: "Folders", icon: FolderOpen },
 ];
 
 const rightItems = [
