@@ -8,22 +8,19 @@ import { SearchModal } from "@/components/layout/search-modal";
 
 export function Sidebar() {
   return (
-    <aside className="hidden lg:flex w-[240px] flex-shrink-0 bg-white/80 dark:bg-dark-surface backdrop-blur-sm border-r border-border/60 flex-col h-full">
+    <aside className="hidden lg:flex w-[220px] flex-shrink-0 bg-card border-r border-border flex-col h-full">
       {/* Brand header */}
-      <div className="gradient-brand px-5 pt-5 pb-4">
+      <div className="px-4 h-14 flex items-center border-b border-border flex-shrink-0">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-xl bg-white/20 flex items-center justify-center flex-shrink-0">
-            <span className="text-white text-sm font-bold">D</span>
+          <div className="w-7 h-7 rounded-lg bg-brand-purple flex items-center justify-center flex-shrink-0 shadow-sm">
+            <span className="text-white text-xs font-bold">D</span>
           </div>
-          <div>
-            <span className="text-white font-bold text-[15px] tracking-tight">Digested</span>
-            <p className="text-white/60 text-[10px] leading-none mt-0.5">Read less, learn more</p>
-          </div>
+          <span className="font-semibold text-[14px] text-text-primary tracking-tight">Digested</span>
         </div>
       </div>
 
       {/* Search */}
-      <div className="px-3 pt-3 pb-2">
+      <div className="px-3 pt-3 pb-1">
         <SearchModal />
       </div>
 

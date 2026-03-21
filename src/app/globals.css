@@ -5,31 +5,31 @@
 @layer base {
   :root {
     color-scheme: light;
-    --background: 248 250 252;
-    --foreground: 15 23 42;
+    --background: 246 247 250;
+    --foreground: 9 9 11;
     --card: 255 255 255;
-    --card-foreground: 15 23 42;
+    --card-foreground: 9 9 11;
     --popover: 255 255 255;
-    --popover-foreground: 15 23 42;
-    --primary: 127 119 221;
+    --popover-foreground: 9 9 11;
+    --primary: 109 100 220;
     --primary-foreground: 255 255 255;
-    --secondary: 241 245 249;
-    --secondary-foreground: 15 23 42;
-    --muted: 241 245 249;
-    --muted-foreground: 100 116 139;
-    --accent: 241 245 249;
-    --accent-foreground: 15 23 42;
+    --secondary: 244 244 247;
+    --secondary-foreground: 9 9 11;
+    --muted: 244 244 247;
+    --muted-foreground: 113 113 122;
+    --accent: 244 244 247;
+    --accent-foreground: 9 9 11;
     --destructive: 239 68 68;
     --destructive-foreground: 255 255 255;
-    --border: 226 232 240;
-    --input: 226 232 240;
-    --ring: 127 119 221;
-    --radius: 0.625rem;
+    --border: 228 228 235;
+    --input: 228 228 235;
+    --ring: 109 100 220;
+    --radius: 0.75rem;
 
     /* Semantic text + surface tokens */
-    --text-primary:   15 23 42;
-    --text-secondary: 71 85 105;
-    --text-muted:     148 163 184;
+    --text-primary:   9 9 11;
+    --text-secondary: 63 63 70;
+    --text-muted:     161 161 170;
     --surface:        255 255 255;
   }
 
@@ -47,7 +47,7 @@
 
   body {
     @apply text-foreground;
-    background: linear-gradient(145deg, #F0F0F8 0%, #EEEEF6 40%, #F2EEF8 100%);
+    background-color: #F6F7FA;
     min-height: 100vh;
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;

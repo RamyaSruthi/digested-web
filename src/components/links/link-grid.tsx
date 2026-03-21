@@ -1,11 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import { LinkCard } from "./link-card";
 import { LinkListItem } from "./link-list-item";
 import { useLinks } from "@/hooks/use-links";
-import { useUIStore } from "@/store/ui-store";
 import type { LinkFilters } from "@/lib/validations/link";
 import type { Link } from "@/types";
 
@@ -21,22 +17,6 @@ function matchesSearch(link: Link, query: string): boolean {
     (link.title ?? "").toLowerCase().includes(q) ||
     (link.description ?? "").toLowerCase().includes(q) ||
     link.url.toLowerCase().includes(q)
-  );
-}
-
-function SkeletonCard() {
-  return (
-    <div className="bg-card rounded-xl border border-border shadow-card overflow-hidden animate-pulse">
-      <div className="h-40 bg-muted" />
-      <div className="p-3.5 space-y-2.5">
-        <div className="h-2.5 w-20 rounded-full bg-muted" />
-        <div className="space-y-1.5">
-          <div className="h-3.5 w-full rounded-full bg-muted" />
-          <div className="h-3.5 w-3/4 rounded-full bg-muted" />
-        </div>
-        <div className="h-2.5 w-16 rounded-full bg-muted" />
-      </div>
-    </div>
   );
 }
 
@@ -58,44 +38,19 @@ function EmptyState({ message, hasSearch, search }: { message: string; hasSearch
   );
 }
 
-const containerVariants = {
-  hidden: {},
-  show: {
-    transition: {
-      staggerChildren: 0.06,
-    },
-  },
-};
-
 export function LinkGrid({
   filters,
   search = "",
   emptyMessage = "No links yet. Add your first link to get started.",
 }: LinkGridProps) {
   const { data: links, isLoading } = useLinks(filters);
-  const { viewMode } = useUIStore();
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 1023px)");
-    setIsMobile(mq.matches);
-    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mq.addEventListener("change", handler);
-    return () => mq.removeEventListener("change", handler);
-  }, []);
-
-  const effectiveViewMode = isMobile ? "list" : viewMode;
 
   if (isLoading) {
-    return effectiveViewMode === "list" ? (
+    return (
       <div className="bg-card rounded-xl border border-border overflow-hidden divide-y divide-border">
         {[1, 2, 3, 4, 5, 6].map((i) => (
-          <div key={i} className="h-14 animate-pulse bg-muted/40" />
+          <div key={i} className="h-[52px] animate-pulse bg-muted/40" />
         ))}
-      </div>
-    ) : (
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        {[1, 2, 3, 4, 5, 6].map((i) => <SkeletonCard key={i} />)}
       </div>
     );
   }
@@ -111,26 +66,11 @@ export function LinkGrid({
     return <EmptyState message={emptyMessage} hasSearch={!!search.trim()} search={search} />;
   }
 
-  if (effectiveViewMode === "list") {
-    return (
-      <div className="bg-card rounded-xl border border-border overflow-hidden divide-y divide-border">
-        {filtered.map((link) => (
-          <LinkListItem key={link.id} link={link} />
-        ))}
-      </div>
-    );
-  }
-
   return (
-    <motion.div
-      variants={containerVariants}
-      initial="hidden"
-      animate="show"
-      className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4"
-    >
-      {filtered.map((link, i) => (
-        <LinkCard key={link.id} link={link} index={i} />
+    <div className="bg-card rounded-xl border border-border overflow-hidden divide-y divide-border">
+      {filtered.map((link) => (
+        <LinkListItem key={link.id} link={link} />
       ))}
-    </motion.div>
+    </div>
   );
 }

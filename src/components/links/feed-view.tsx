@@ -7,11 +7,9 @@ import { StatusTabs } from "./status-tabs";
 import { AddLinkDialog } from "./add-link-dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Plus, Search, Tag, X, LayoutGrid, List } from "lucide-react";
+import { Plus, Search, Tag, X } from "lucide-react";
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
 import { useRouter } from "next/navigation";
-import { useUIStore } from "@/store/ui-store";
-import { cn } from "@/lib/utils";
 import type { LinkStatus } from "@/types";
 
 function FeedContent() {
@@ -24,7 +22,6 @@ function FeedContent() {
   const statusParam = searchParams.get("status") as LinkStatus | null;
   const tagParam = searchParams.get("tag");
   const shareUrl = searchParams.get("shareUrl");
-  const { viewMode, setViewMode } = useUIStore();
 
   // Auto-open AddLinkDialog when arriving from Web Share Target
   useEffect(() => {
@@ -39,20 +36,20 @@ function FeedContent() {
   // Tag view — no status tabs, different header
   if (tagParam) {
     return (
-      <div className="h-full overflow-auto p-4 lg:p-6">
-        <div className="flex items-center justify-between mb-6">
-          <div className="flex items-center gap-2.5">
-            <Tag className="w-5 h-5 text-brand-purple" />
-            <h1 className="text-xl lg:text-2xl font-semibold text-text-primary">{tagParam}</h1>
+      <div className="h-full overflow-auto px-5 py-5">
+        <div className="flex items-center justify-between mb-5">
+          <div className="flex items-center gap-2">
+            <Tag className="w-4 h-4 text-brand-purple" />
+            <h1 className="text-lg font-semibold text-text-primary tracking-tight">{tagParam}</h1>
           </div>
           <Button
             variant="ghost"
             size="sm"
-            className="gap-1.5 text-text-muted hover:text-text-primary h-9"
+            className="gap-1.5 text-text-muted hover:text-text-primary h-8 text-xs"
             onClick={() => router.push("/app?status=unread")}
           >
-            <X className="w-3.5 h-3.5" />
-            <span className="hidden sm:inline">Clear tag</span>
+            <X className="w-3 h-3" />
+            Clear tag
           </Button>
         </div>
         <LinkGrid
@@ -65,47 +62,31 @@ function FeedContent() {
   }
 
   return (
-    <div className="h-full overflow-auto p-4 lg:p-6">
+    <div className="h-full overflow-auto px-5 py-5">
       {/* Header */}
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-xl lg:text-2xl font-semibold text-text-primary">
+        <h1 className="text-2xl font-bold text-text-primary tracking-tight">
           {statusParam === "digested" ? "Digested" : "Yet to Digest"}
         </h1>
         <div className="flex items-center gap-2">
-          {/* View mode toggle — desktop only */}
-          <div className="hidden lg:flex items-center gap-0.5 p-1 bg-muted rounded-lg">
-            <button
-              onClick={() => setViewMode("grid")}
-              className={cn("p-1.5 rounded-md transition-colors", viewMode === "grid" ? "bg-card shadow-sm text-text-primary" : "text-text-muted hover:text-text-secondary")}
-              title="Grid view"
-            >
-              <LayoutGrid className="w-3.5 h-3.5" />
-            </button>
-            <button
-              onClick={() => setViewMode("list")}
-              className={cn("p-1.5 rounded-md transition-colors", viewMode === "list" ? "bg-card shadow-sm text-text-primary" : "text-text-muted hover:text-text-secondary")}
-              title="List view"
-            >
-              <List className="w-3.5 h-3.5" />
-            </button>
-          </div>
           {/* Search — desktop only */}
           <div className="relative hidden lg:block">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-text-muted" />
             <Input
               ref={searchInputRef}
               placeholder="Search… (/)"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="pl-9 w-48 h-9 text-sm bg-card"
+              className="pl-9 w-52 h-8 text-sm bg-card border-border"
             />
           </div>
           {/* Add Link — desktop only (mobile uses bottom nav FAB) */}
           <div className="hidden lg:block">
             <AddLinkDialog open={addLinkOpen} onOpenChange={setAddLinkOpen} defaultUrl={shareUrl ?? undefined}>
-              <Button className="bg-brand-purple hover:bg-brand-purple-dark gap-2 h-9">
-                <Plus className="w-4 h-4" />
-                Add Link <kbd className="ml-1 text-xs opacity-60 font-mono">N</kbd>
+              <Button className="bg-brand-purple hover:bg-brand-purple-dark gap-1.5 h-8 text-sm font-medium">
+                <Plus className="w-3.5 h-3.5" />
+                Add Link
+                <kbd className="ml-0.5 text-[10px] opacity-60 font-mono">N</kbd>
               </Button>
             </AddLinkDialog>
           </div>
@@ -115,7 +96,7 @@ function FeedContent() {
       {/* Status tabs */}
       <StatusTabs />
 
-      {/* Grid */}
+      {/* Link list */}
       <LinkGrid
         filters={{ status: statusParam ?? "unread" }}
         search={search}
