@@ -3,7 +3,7 @@
 import { Suspense, useState } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { Inbox, FolderOpen, NotebookPen, Settings, Plus } from "lucide-react";
+import { Inbox, FolderOpen, BarChart2, Settings, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AddLinkDialog } from "@/components/links/add-link-dialog";
 import { useLinks } from "@/hooks/use-links";
@@ -14,7 +14,7 @@ const leftItems = [
 ];
 
 const rightItems = [
-  { href: "/app/notes",    label: "Notes",    icon: NotebookPen },
+  { href: "/app/stats",    label: "Stats",    icon: BarChart2 },
   { href: "/app/settings", label: "Settings", icon: Settings },
 ];
 

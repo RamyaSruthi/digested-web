@@ -131,10 +131,10 @@ export function LinkListItem({ link }: LinkListItemProps) {
         style={{ x }}
         onClick={handleClick}
         className={cn(
-          "group relative flex items-center gap-3 px-4 py-3 cursor-pointer transition-colors",
-          isBulkSelected ? "bg-brand-purple-light/20"
-          : isSelected   ? "bg-brand-purple-light/10"
-          : "bg-card hover:bg-muted/40"
+          "group relative flex items-center gap-3 px-4 py-3.5 cursor-pointer transition-colors",
+          isBulkSelected ? "bg-zinc-50"
+          : isSelected   ? "bg-zinc-50"
+          : "bg-card hover:bg-zinc-50"
         )}
       >
         {/* Checkbox (bulk select) */}
@@ -168,10 +168,10 @@ export function LinkListItem({ link }: LinkListItemProps) {
 
         {/* Title + domain */}
         <div className="flex-1 min-w-0">
-          <p className={cn("text-sm font-medium truncate", link.is_dead ? "text-text-muted line-through" : "text-text-primary")}>
+          <p className={cn("text-[13.5px] font-medium leading-snug truncate", link.is_dead ? "text-text-muted line-through" : "text-[#1a1a1a]")}>
             {link.title || domain}
           </p>
-          <p className="text-[11px] text-text-muted truncate">{domain}</p>
+          <p className="text-[11px] text-text-muted truncate mt-0.5">{domain}</p>
         </div>
 
         {/* Reading time */}

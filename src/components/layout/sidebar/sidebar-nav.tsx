@@ -51,13 +51,13 @@ export function SidebarNav() {
             key={href}
             href={href}
             className={cn(
-              "flex items-center gap-2.5 px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-150",
+              "flex items-center gap-2.5 px-3 py-1.5 rounded-md text-[13px] font-medium transition-all duration-150",
               isActive
-                ? "bg-brand-purple-light text-brand-purple"
-                : "text-text-secondary hover:bg-muted hover:text-text-primary"
+                ? "text-text-primary bg-muted"
+                : "text-text-muted hover:bg-muted/60 hover:text-text-primary"
             )}
           >
-            <Icon className={cn("w-4 h-4 flex-shrink-0", isActive ? "text-brand-purple" : "text-text-muted")} />
+            <Icon className={cn("w-4 h-4 flex-shrink-0", isActive ? "text-text-primary" : "text-text-muted")} />
             {label}
           </Link>
         );
@@ -66,7 +66,7 @@ export function SidebarNav() {
       {/* Surprise Me */}
       <button
         onClick={handleSurpriseMe}
-        className="flex items-center gap-2.5 w-full px-3 py-2 rounded-lg text-[13px] font-medium transition-all duration-150 text-text-secondary hover:bg-muted hover:text-text-primary"
+        className="flex items-center gap-2.5 w-full px-3 py-1.5 rounded-md text-[13px] font-medium transition-all duration-150 text-text-muted hover:bg-muted/60 hover:text-text-primary"
       >
         <Shuffle className="w-4 h-4 flex-shrink-0 text-text-muted" />
         Surprise Me
