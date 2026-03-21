@@ -66,6 +66,7 @@ function PanelContent({ link }: PanelContentProps) {
         status,
         digested_at: status === "digested" ? new Date().toISOString() : null,
       });
+      if (status === "archived" || status === "digested") closeDetailPanel();
     } catch {
       toast.error("Failed to update status");
     }

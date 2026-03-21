@@ -187,7 +187,6 @@ export default function StatsPage() {
   const { data: stats, isLoading } = useQuery({
     queryKey: ["stats"],
     queryFn: fetchStats,
-    staleTime: 1000 * 60,
   });
 
   const digestedRate = stats && stats.total_saved > 0
