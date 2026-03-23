@@ -4,7 +4,7 @@ export const createLinkSchema = z.object({
   url: z.string().url("Please enter a valid URL"),
   title: z.string().max(255).optional(),
   description: z.string().max(1000).optional(),
-  image_url: z.string().url().optional().or(z.literal("")),
+  image_url: z.string().optional().nullable(),
   folder_id: z.string().uuid().optional().nullable(),
   reading_time_minutes: z.number().int().positive().optional().nullable(),
 });
